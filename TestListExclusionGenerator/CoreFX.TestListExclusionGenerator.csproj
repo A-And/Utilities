@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SystemCommandLineVersion>0.1.0-e160909-1</SystemCommandLineVersion>
+    <NewtonsoftJsonVersion>11.0.2</NewtonsoftJsonVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>$(NewtonsoftJsonVersion)</Version>
+    </PackageReference>
+    <PackageReference Include="System.CommandLine">
+      <Version>$(SystemCommandLineVersion)</Version>
+    </PackageReference>
+  </ItemGroup>
+</Project>

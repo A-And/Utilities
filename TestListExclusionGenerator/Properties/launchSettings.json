@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreFX.TestListExclusionGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "--logDir \"C:\\coreclr_clean\\coreclr\\bin\\Logs\\CoreFX\\Windows_NT.x64.Release\" --p *.xml --outDir C:\\Users\\anandono\\source\\repos\\Utilities\\"
+    }
+  }
+}

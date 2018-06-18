@@ -1,0 +1,13 @@
+.vs/
+*.exe
+*.exe.stackdump
+*.dll
+*.lib
+[Bb]in/
+[Oo]bj/
+*.nupkg
+*.nuget.g.props
+*.nuget.g.targets
+*.nuget.cache
+project.lock.json
+project.assets.json
