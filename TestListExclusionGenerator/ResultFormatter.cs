@@ -31,7 +31,7 @@ namespace CoreFX.TestUtils.XUnit
             IEnumerable<string> logFiles = DiscoverLogs(logDir, logPattern);
             TestListGenerator generator = new TestListGenerator();
             generator.GenerateFromXML(logFiles, outDir);
-            //PrintTotals(logFiles);
+            PrintTotals(logFiles);
         }
 
         private static void PrintTotals(IEnumerable<string> logFiles)

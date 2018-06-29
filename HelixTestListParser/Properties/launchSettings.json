@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HelixTestListParser": {
+      "commandName": "Project",
+      "commandLineArgs": "--testlist \"C:\\Users\\anandono\\Downloads\\TestList.json\" --outputPath \"C:\\Users\\anandono\\Downloads\\TestList_New.json\""
+    }
+  }
+}

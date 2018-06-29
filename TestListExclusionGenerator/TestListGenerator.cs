@@ -58,42 +58,45 @@ namespace CoreFX.TestUtils.XUnit
                         collectionReader.ReadToFollowing("assembly");
                         int failedTests = 0;
                         Int32.TryParse(collectionReader.GetAttribute("failed"), out failedTests);
-                        if (failedTests == 0)
-                        {
-                            continue;
-                        }
-
                         assembly.Exclusions = new Exclusions();
                         List<Exclusion> exclusions = new List<Exclusion>();
-                        collectionReader.ReadToFollowing("collection");
 
-                        do
+                        if (failedTests != 0)
                         {
-                            using (XmlReader testReader = collectionReader.ReadSubtree())
+
+                            collectionReader.ReadToFollowing("collection");
+
+                            do
                             {
-                                testReader.ReadToDescendant("test");
-                                do
+                                using (XmlReader testReader = collectionReader.ReadSubtree())
                                 {
-                                    string result = testReader.GetAttribute("result");
-                                    if (result == "Fail")
+                                    testReader.ReadToDescendant("test");
+                                    do
                                     {
-                                        string testName = testReader.GetAttribute("name");
-                                        string sanitizedTestName = testName.Substring(0, testName.IndexOf('(') < 0 ? testName.Length : testName.IndexOf('('));
-                                        if (methodNames.Contains(sanitizedTestName))
-                                            continue;
+                                        string result = testReader.GetAttribute("result");
+                                        if (result == "Fail")
+                                        {
+                                            string testName = testReader.GetAttribute("name");
+                                            string sanitizedTestName = testName.Substring(0, testName.IndexOf('(') < 0 ? testName.Length : testName.IndexOf('('));
+                                            if (methodNames.Contains(sanitizedTestName))
+                                                continue;
 
-                                        methodNames.Add(sanitizedTestName);
-                                        testReader.ReadToDescendant("failure");
-                                        string failureReason = testReader.GetAttribute("exception-type");
-                                        exclusions.Add(new Exclusion() { Name = sanitizedTestName, Reason= failureReason });
+                                            methodNames.Add(sanitizedTestName);
+                                            testReader.ReadToDescendant("failure");
+                                            string failureReason = testReader.GetAttribute("exception-type");
+                                            testReader.ReadToDescendant("message");
+                                            testReader.Read();
+                                            failureReason += " " + testReader.Value;
+                                            exclusions.Add(new Exclusion() { Name = sanitizedTestName, Reason = failureReason });
+                                        }
                                     }
+                                    while (testReader.ReadToFollowing("test"));
                                 }
-                                while (testReader.ReadToFollowing("test"));
-                            }
 
-                        } while (collectionReader.ReadToNextSibling("collection"));
+                            } while (collectionReader.ReadToNextSibling("collection"));
 
-                        assembly.Exclusions.Methods = exclusions.ToArray();
+                            assembly.Exclusions.Methods = exclusions.ToArray();
+                        }
 
                         parsedAssemblies.Add(assembly);
                     }
@@ -105,13 +108,13 @@ namespace CoreFX.TestUtils.XUnit
                     continue;
                 }
             }
-            foreach(var assembly in parsedAssemblies)
-            {
-                foreach(var exclusion in assembly.Exclusions.Methods)
-                {
-                    Console.WriteLine(exclusion.Name + " " + exclusion.Reason);
-                }
-            }
+            //foreach (var assembly in parsedAssemblies)
+            //{
+            //    foreach (var exclusion in assembly.Exclusions.Methods)
+            //    {
+            //        Console.WriteLine(exclusion.Name + " " + exclusion.Reason);
+            //    }
+            //}
             return parsedAssemblies;
         }
     }
