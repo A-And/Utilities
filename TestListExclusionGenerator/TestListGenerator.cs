@@ -96,9 +96,9 @@ namespace CoreFX.TestUtils.XUnit
                             } while (collectionReader.ReadToNextSibling("collection"));
 
                             assembly.Exclusions.Methods = exclusions.ToArray();
+                            assembly.Enabled = true;
+                            parsedAssemblies.Add(assembly);
                         }
-
-                        parsedAssemblies.Add(assembly);
                     }
                 }
                 catch (XmlException exc)

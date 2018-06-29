@@ -15,6 +15,10 @@ namespace CoreFX.TestUtils.XUnit
         [JsonProperty("exclusions")]
         public Exclusions Exclusions;
 
+        [JsonRequired]
+        [JsonProperty("enabled")]
+        public bool Enabled;
+
         // Used to assign a test url or to override it via the json file definition
         [JsonIgnore]
         [JsonProperty(Required = Required.Default)]
